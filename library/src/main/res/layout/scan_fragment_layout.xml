@@ -12,7 +12,7 @@
         android:background="@color/bottom_background_color"
         android:orientation="horizontal"
         android:padding="@dimen/bottom_bar_padding"
-        android:text="@string/scan"></Button>
+        android:text="Siguiente"></Button>
 
     <FrameLayout
         android:layout_width="match_parent"
