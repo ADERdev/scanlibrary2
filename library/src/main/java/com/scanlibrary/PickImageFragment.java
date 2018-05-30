@@ -330,7 +330,7 @@ public class PickImageFragment extends Fragment implements  OnDialogButtonClickL
         scanner.onBitmapSelect(uri);
     }
 
-    private Bitmap getBitmap(Uri selectedimg) throws IOException {
+    /*private Bitmap getBitmap(Uri selectedimg) throws IOException {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 3;
         AssetFileDescriptor fileDescriptor = null;
@@ -340,5 +340,17 @@ public class PickImageFragment extends Fragment implements  OnDialogButtonClickL
                 = BitmapFactory.decodeFileDescriptor(
                 fileDescriptor.getFileDescriptor(), null, options);
         return original;
+    }*/
+    private Bitmap getBitmap(Uri selectedimg) throws IOException {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 3;
+        AssetFileDescriptor fileDescriptor = null;
+        fileDescriptor = getActivity().getContentResolver().openAssetFileDescriptor(selectedimg, "r");
+        Bitmap original = BitmapFactory.decodeFileDescriptor(fileDescriptor.getFileDescriptor(), null, options);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(original,original.getWidth(),original.getHeight(),true);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
+        return rotatedBitmap;
     }
 }
